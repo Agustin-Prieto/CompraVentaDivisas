@@ -1,0 +1,43 @@
+version: '3.4'
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  compraventadivisas.db:
+    container_name: "CompraVentaDivisas.DB"
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password!123456
+    restart: always
+    volumes:
+      - app_data:/var/lib/mssql/data
+    networks:
+      - dev
+  compraventadivisas.api:
+    container_name: "CompraVentaDivisas.API"
+    image: ${DOCKER_REGISTRY-}compraventadivisasapi
+    build:
+      context: .
+      dockerfile: CompraVentaDivisas.API/Dockerfile
+    ports:
+      - 5000:5000
+      - 5001:5001
+    depends_on:
+      - compraventadivisas.db
+    environment:
+      # - DB_HOST=CompraVentaDivisas.db
+      # - DB_NAME=CompraVentaDivisas
+      - DB_HOST=172.20.0.2
+      - DB_PORT=1433
+      - DB_NAME=CompraVentaDivisas
+      - DB_USER=sa
+      - MSSQL_SA_PASSWORD=Password!123456
+    networks:
+      - dev
+volumes:
+  app_data:
