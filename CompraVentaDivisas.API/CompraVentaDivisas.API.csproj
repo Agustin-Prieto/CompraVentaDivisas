@@ -23,4 +23,8 @@
     <ProjectReference Include="..\CompraVentaDivisas.Infrastructure\CompraVentaDivisas.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
