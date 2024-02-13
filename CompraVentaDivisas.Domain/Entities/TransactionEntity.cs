@@ -1,4 +1,5 @@
 ﻿using CompraVentaDivisas.Domain.Enums;
+using FluentResults;
 
 namespace CompraVentaDivisas.Domain.Entities;
 
@@ -23,4 +24,28 @@ public sealed class TransactionEntity
     public Guid ClientId { get; set; }
     public Guid CurrencyId { get; set; }
     public Guid ExchangeRateId { get; set; }
+
+    public static Result<bool> IsValidPurchase(Guid clientId, Guid currencyId, Guid exchangeRateId, decimal amount)
+    {
+        var result = new Result<bool>();
+        return result;
+    }
+
+    public static Result<bool> IsValidSale(DateTime date)
+    {
+        var result = new Result<bool>();
+        return result;
+    }
+
+    public static Result<TransactionEntity> RegisterPurchase(Guid clientId, Guid currencyId, Guid exchangeRateId, decimal amount)
+    {
+        var result = new Result<TransactionEntity>();
+        return result;
+    }
+
+    public static Result<TransactionEntity> RegisterSale(Guid clientId, Guid currencyId, Guid exchangeRateId, decimal amount)
+    {
+        var result = new Result<TransactionEntity>();
+        return result;
+    }
 }
