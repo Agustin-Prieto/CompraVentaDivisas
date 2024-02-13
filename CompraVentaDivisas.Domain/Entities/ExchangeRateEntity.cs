@@ -20,5 +20,4 @@ public sealed class ExchangeRateEntity
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public ExchangeRateType Type { get; set; }
     public Guid CurrencyId { get; set; }
-    //public CurrencyEntity Currency { get; set; }
 }
