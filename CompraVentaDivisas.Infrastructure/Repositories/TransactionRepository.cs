@@ -17,16 +17,16 @@ public sealed class TransactionRepository : ITransactionRepository
 
     public async Task<TransactionEntity> GetTransactionByIdAsync(int id)
     {
-        var result = await _sqlDataAccess.LoadData<TransactionEntity, dynamic>("dbo.spGetTransactionById", new { Id = id });
+        var result = await _sqlDataAccess.LoadData<TransactionEntity, dynamic>("dbo.spTransaction_GetById", new { Id = id });
         return result.FirstOrDefault();
     }
 
     public Task InsertTransactionAsync(TransactionEntity currency) =>
-        _sqlDataAccess.SaveData("dbo.spInsertTransaction", currency);
+        _sqlDataAccess.SaveData("dbo.spTransaction_Insert", currency);
 
     public Task UpdateTransactionAsync(TransactionEntity currency) => 
-        _sqlDataAccess.SaveData("dbo.spUpdateTransaction", currency);
+        _sqlDataAccess.SaveData("dbo.spTransaction_Update", currency);
 
     public Task DeleteTransactionAsync(int id) =>
-        _sqlDataAccess.SaveData("dbo.spDeleteTransaction", new { Id = id });
+        _sqlDataAccess.SaveData("dbo.spTransaction_Delete", new { Id = id });
 }
