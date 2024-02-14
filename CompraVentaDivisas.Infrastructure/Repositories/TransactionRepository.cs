@@ -1,5 +1,7 @@
 ﻿using CompraVentaDivisas.Application.Abastractions;
+using CompraVentaDivisas.Application.DTOs;
 using CompraVentaDivisas.Domain.Entities;
+using Dapper;
 
 namespace CompraVentaDivisas.Infrastructure.Repositories;
 
@@ -12,21 +14,58 @@ public sealed class TransactionRepository : ITransactionRepository
         _sqlDataAccess = sqlDataAccess;
     }
 
-    public Task<IEnumerable<TransactionEntity>> GetAllTransactionsAsync() =>
-        _sqlDataAccess.LoadData<TransactionEntity, dynamic>("dbo.spTransaction_GetAll", new { });
-
-    public async Task<TransactionEntity> GetTransactionByIdAsync(int id)
+    public async Task<IEnumerable<TransactionEntity>> GetAllTransactionsAsync() 
     {
-        var result = await _sqlDataAccess.LoadData<TransactionEntity, dynamic>("dbo.spTransaction_GetById", new { Id = id });
+        using var sqlConnection = _sqlDataAccess.CreateConnection();
+
+        var result = await sqlConnection.QueryAsync<
+            TransactionEntity,
+            CurrencyEntity,
+            ExchangeRateEntity,
+            ClientEntity,
+            TransactionEntity>("dbo.spTransaction_GetAll", (transaction, currency, exchangeRate, client) =>
+            {
+                transaction.Currency = currency;
+                transaction.ExchangeRate = exchangeRate;
+                transaction.Client = client;
+                return transaction;
+            },
+        splitOn: "CurrencyId, ExchangeRateId, ClientId",
+        commandType: System.Data.CommandType.StoredProcedure);
+
+        return result;
+    }
+
+
+    public async Task<TransactionEntity> GetTransactionByIdAsync(Guid id)
+    {
+        using var sqlConnection = _sqlDataAccess.CreateConnection();
+
+        var result =  await sqlConnection.QueryAsync<
+            TransactionEntity, 
+            CurrencyEntity, 
+            ExchangeRateEntity, 
+            ClientEntity, 
+            TransactionEntity>("dbo.spTransaction_GetById", (transaction, currency, exchangeRate, client) =>
+        {
+            transaction.Currency = currency;
+            transaction.ExchangeRate = exchangeRate;
+            transaction.Client = client;
+            return transaction;
+        },
+        new { id },
+        splitOn: "CurrencyId, ExchangeRateId, ClientId",
+        commandType: System.Data.CommandType.StoredProcedure);
+
         return result.FirstOrDefault();
     }
 
-    public Task InsertTransactionAsync(TransactionEntity currency) =>
-        _sqlDataAccess.SaveData("dbo.spTransaction_Insert", currency);
+    public Task InsertTransactionAsync(TransactionDto transaction) =>
+        _sqlDataAccess.SaveData("dbo.spTransaction_Insert", transaction);
 
-    public Task UpdateTransactionAsync(TransactionEntity currency) => 
-        _sqlDataAccess.SaveData("dbo.spTransaction_Update", currency);
+    public Task UpdateTransactionAsync(TransactionEntity transaction) => 
+        _sqlDataAccess.SaveData("dbo.spTransaction_Update", transaction);
 
-    public Task DeleteTransactionAsync(int id) =>
+    public Task DeleteTransactionAsync(Guid id) =>
         _sqlDataAccess.SaveData("dbo.spTransaction_Delete", new { Id = id });
 }
