@@ -4,12 +4,12 @@ namespace CompraVentaDivisas.Domain.Entities;
 
 public sealed class ClientEntity
 {
-    public ClientEntity(Guid id, string name)
+    public ClientEntity(Guid clientId, string name)
     {
-        Id = id;
+        ClientId = clientId;
         Name = name;
     }
-    public Guid Id { get; set; }
+    public Guid ClientId { get; set; }
     public string Name { get; set; }
 
     public static Result<IEnumerable<TransactionEntity>> GetTransactions()

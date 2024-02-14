@@ -2,13 +2,13 @@
 
 public sealed class CurrencyEntity
 {
-    public CurrencyEntity(Guid id, string name, string symbol)
+    public CurrencyEntity(Guid currencyId, string name, string symbol)
     {
-        Id = id;
+        CurrencyId = currencyId;
         Name = name;
         Symbol = symbol;
     }
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Symbol { get; set; } = string.Empty;
+    public Guid CurrencyId { get; set; }
+    public string Name { get; set; }
+    public string Symbol { get; set; }
 }
