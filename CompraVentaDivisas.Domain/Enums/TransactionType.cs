@@ -8,6 +8,6 @@ namespace CompraVentaDivisas.Domain.Enums;
 
 public enum TransactionType
 {
-    Buy,
-    Sell
+    Compra,
+    Venta
 }

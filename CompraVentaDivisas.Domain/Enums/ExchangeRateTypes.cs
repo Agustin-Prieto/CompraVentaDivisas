@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CompraVentaDivisas.Domain.Enums;
+﻿namespace CompraVentaDivisas.Domain.Enums;
 
 public enum ExchangeRateType
 {
-    Oficial,
-    ContadoConLiquidacion,
-    MEP,
-    Soja
+    Oficial = 0,
+    ContadoConLiquidacion = 1,
+    MEP = 3,
+    Soja = 4,
+    Blue = 5
 }
