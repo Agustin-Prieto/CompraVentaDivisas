@@ -18,6 +18,12 @@ public sealed class SqlDataAccess : ISqlDataAccess
 
         return await sqlConnection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
     }
+    public async Task<T> LoadDataSingle<T, U>(string storedProcedure, U parameters)
+    {
+        using var sqlConnection = CreateConnection();
+
+        return await sqlConnection.QuerySingleAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+    }
 
     public async Task SaveData<T>(string storedProcedure, T parameters)
     {
