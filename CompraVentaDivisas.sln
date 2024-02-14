@@ -21,6 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraVentaDivisas.API.Unit
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E98B04B1-B9D6-4BF7-B915-17112A01EFD8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{11360AAD-E334-41EE-9829-BC8CAEB3FF18}"
+	ProjectSection(SolutionItems) = preProject
+		create_script.sql = create_script.sql
+		stored_procedures_script.sql = stored_procedures_script.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
