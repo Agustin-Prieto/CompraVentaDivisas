@@ -1,4 +1,6 @@
-﻿using CompraVentaDivisas.Application.Behaviors;
+﻿using CompraVentaDivisas.Application.Abastractions;
+using CompraVentaDivisas.Application.Behaviors;
+using CompraVentaDivisas.Application.Utils;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,8 @@ public static class DependencyInjection
         services.AddScoped(
             typeof(IPipelineBehavior<,>),
             typeof(LoggingPipelineBehavior<,>));
+
+        services.AddScoped<ITransactionValidate, TransactionValidate>();
 
         return services;
     }

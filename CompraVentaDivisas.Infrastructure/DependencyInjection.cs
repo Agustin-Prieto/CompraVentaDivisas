@@ -13,6 +13,7 @@ public static class DependencyInjection
 
         services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+        services.AddScoped<IClientRepository, ClientRepository>();
         services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
 
