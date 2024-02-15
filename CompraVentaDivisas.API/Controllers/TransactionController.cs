@@ -1,6 +1,7 @@
 ﻿using CompraVentaDivisas.API.Abstractions;
 using CompraVentaDivisas.Application.Features.Transaction.Commands.CreateNewTransaction;
 using CompraVentaDivisas.Application.Features.Transaction.Queries.GetAll;
+using CompraVentaDivisas.Application.Features.Transaction.Queries.GetByClientId;
 using CompraVentaDivisas.Application.Features.Transaction.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,13 @@ namespace CompraVentaDivisas.API.Controllers
 
         [HttpPost("CreateTransaction")]
         public async Task<IActionResult> CreateTransaction([FromBody] CreateTransactionCommand command, CancellationToken cancellationToken)
+        {
+            var response = await Sender.Send(command, cancellationToken);
+            return Ok(response);
+        }
+
+        [HttpGet("GetByClientId")]
+        public async Task<IActionResult> GetByClientId([FromQuery] GetTransactionsByClientIdQuery command, CancellationToken cancellationToken)
         {
             var response = await Sender.Send(command, cancellationToken);
             return Ok(response);
