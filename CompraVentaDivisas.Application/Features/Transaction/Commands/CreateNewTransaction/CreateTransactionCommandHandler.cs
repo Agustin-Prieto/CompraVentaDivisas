@@ -24,7 +24,7 @@ internal sealed class CreateTransactionCommandHandler : ICommandHandler<CreateTr
         var isTransactionValid = await _transactionValidate.ValidateTransaction(request);
 
         if (isTransactionValid.IsFailed)
-            return Result.Fail(isTransactionValid.Errors);
+            return isTransactionValid;
 
         // crear
         var transaction = new TransactionDto(

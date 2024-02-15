@@ -2,7 +2,6 @@
 using CompraVentaDivisas.Application.Abastractions;
 using CompraVentaDivisas.Application.Abastractions.Messaging;
 using FluentResults;
-using CompraVentaDivisas.Application.Features.Transaction.Queries.GetById;
 
 namespace CompraVentaDivisas.Application.Features.Transaction.Queries.GetAll;
 
