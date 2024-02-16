@@ -23,8 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompraVentaDivisas.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{45A4D073-3630-4AF7-8199-E70ECD75F81A}"
 	ProjectSection(SolutionItems) = preProject
-		Scripts\create_script.sql = Scripts\create_script.sql
-		Scripts\stored_procedures_script.sql = Scripts\stored_procedures_script.sql
+		init-script.sql = init-script.sql
 	EndProjectSection
 EndProject
 Global
