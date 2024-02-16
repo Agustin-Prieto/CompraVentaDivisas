@@ -60,6 +60,29 @@ public sealed class TransactionRepository : ITransactionRepository
         return result.FirstOrDefault();
     }
 
+    public async Task<IEnumerable<TransactionEntity>> GetTransactionByClientIdAsync(Guid clientId)
+    {
+        using var sqlConnection = _sqlDataAccess.CreateConnection();
+
+        var result = await sqlConnection.QueryAsync<
+            TransactionEntity,
+            CurrencyEntity,
+            ExchangeRateEntity,
+            ClientEntity,
+            TransactionEntity>("dbo.spTransaction_GetByClientId", (transaction, currency, exchangeRate, client) =>
+            {
+                transaction.Currency = currency;
+                transaction.ExchangeRate = exchangeRate;
+                transaction.Client = client;
+                return transaction;
+            },
+        new { clientId },
+        splitOn: "CurrencyId, ExchangeRateId, ClientId",
+        commandType: System.Data.CommandType.StoredProcedure);
+
+        return result;
+    }
+
     public Task InsertTransactionAsync(TransactionDto transaction) =>
         _sqlDataAccess.SaveData("dbo.spTransaction_Insert", transaction);
 
