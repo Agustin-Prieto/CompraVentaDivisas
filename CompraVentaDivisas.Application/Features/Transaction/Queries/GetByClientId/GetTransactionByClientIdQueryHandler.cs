@@ -16,16 +16,11 @@ internal sealed class GetTransactionByClientIdQueryHandler : IQueryHandler<GetTr
 
     public async Task<Result<IEnumerable<TransactionEntity>>> Handle(GetTransactionsByClientIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await _transactionRepository.GetAllTransactionsAsync();
+        var result = await _transactionRepository.GetTransactionByClientIdAsync(request.ClientId);
 
         if (result is null)
             return Result.Fail<IEnumerable<TransactionEntity>>("No existen transacciones para este usuario");
 
-        var filteredResult = result.Where(x => x.Client.ClientId == request.ClientId);
-
-        if (filteredResult is null)
-            return Result.Fail<IEnumerable<TransactionEntity>>("No existen transacciones para este usuario");
-
-        return Result.Ok(filteredResult);
+        return Result.Ok(result);
     }
 }
